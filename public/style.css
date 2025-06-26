@@ -1,0 +1,47 @@
+body{
+    max-width: 50em !important;
+    background-color: black !important;
+    color: white !important;
+}
+.heading{
+    font-family:'Times New Roman', Times, serif;
+    font-size: 45px;
+    margin-bottom: 10px !important;
+    color: #008800;
+}
+.paragraph{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 19px;
+    color: #CCCCCC !important;
+    text-align: justify;
+}
+strong{
+    color: #e6e6e6 !important;
+}
+.inputFields{
+    width: 40px !important;
+}
+.bookHeading{
+    font-family:'Times New Roman', Times, serif;
+    font-size: 45px;
+    margin-bottom: 10px !important;
+    color: #AAAAFF !important;
+    text-decoration: none !important;
+}
+.bookLink{
+    color: #AAAAFF !important;
+    text-decoration: none !important;
+}
+.bookLink:hover{
+    text-decoration: underline !important;
+}
+pre{
+    white-space: pre-wrap; 
+    max-width: 100%; 
+}
+.clearfix{
+    margin-bottom: 20px;
+}
+.btnColor{
+    background-color: #AAAAFF !important;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+<body class="container">
+  <header>
+    <div class="mb-3">
+      <a class="text-decoration-none heading" style="font-size: 60px;" href="/">SqueezeBook</a>
+    </div>
+  </header>
+  <main>
+    <h1 class="heading">Welcome to SqueezeBook</h1>
+    <p class="paragraph lh-base">
+      Tiny summary but <strong>detailed notes for each</strong>. Use the <strong>ISBN number</strong> to find it from your local 
+      library or anywhere else. This page will constantly update as I <strong>read more</strong>, so <strong>bookmark</strong> it 
+      if you want to check back in a few months. Each entry is meant to <strong>capture the essence of the book—its core ideas</strong>, key takeaways, and 
+      practical lessons that stood out during my reading. Whether you're looking for a <strong>quick overview or in-depth reflection</strong>, you'll 
+      find both here. I also include personal insights and how the book relates to broader themes or current events, making the notes 
+      more than just a summary—they're a conversation.
+    </p>    
+    <p class="paragraph mb-3">
+      Sorted with <strong>my top recommendations</strong> up top.
+    </p>
+    
+    <div class="d-flex align-items-center flex-wrap gap-2 fs-5 paragraph mb-4 justify-content-center">
+      <form action="/search" method="GET" class="d-flex align-items-center flex-wrap gap-2 fs-5 paragraph mb-4 justify-content-center">
+        <strong>Sort By</strong>
+        <a class="ms-2 me-2 bookLink" href="/sortByTitle">Title</a>
+        <a class="me-3 bookLink" href="/sortByRating">Top</a>
+        
+        <input name="query" class="form-control form-control-sm" type="search" placeholder="Search For Book" value="<%= searchTerm ? searchTerm : '' %>"
+        id="search" style="max-width: 150px;">
+        <button class="btn btn-sm btnColor text-white" type="submit">Search</button>
+        <br>
+        <a href="/add" class="bookLink">Add Book</a>
+      </form>
+      
+    </div>
+    <hr class="bg-white " style="height: 2px;">
+  </main>
+
+  <section class="my-5">
+    <% book.forEach(function(book) { %>
+      <div class="mb-5 clearfix">
+        <img
+          src="<%= book.image %>"
+          alt="<%= book.title %>"
+          class="me-4 float-start"
+          style="width: 130px; height: auto;"
+        />
+  
+        <a class="bookLink text-decoration-none" href="/viewBook/<%= book.id %>">
+          <h1 class="heading bookLink fs-1 d-inline"><%= book.title %></h1>
+        </a>
+  
+        <div class="my-3">
+          <small class="text-secondary"><%= book.created_date %></small>
+          <small class="ms-2 text-secondary">My Rating: <strong><%= book.rating %>/10</strong></small>
+        </div>
+  
+        <p class="paragraph mt-2"><%= book.summary %></p>
+  
+        <a href="/viewBook/<%= book.id %>" class="bookLink fs-4">Read Notes</a>
+      </div>
+    <% }) %>
+  </section>
+   
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+    <script src="/main.js"></script>
+</body>
+</html>
