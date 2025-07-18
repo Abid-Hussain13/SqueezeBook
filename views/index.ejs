@@ -1,0 +1,58 @@
+<%- include("partials/header.ejs") %>
+  <main class="section">
+    <h1 class="secHeading">Welcome to SqueezeBook</h1>
+    <p class="paragraph lh-base">
+      Tiny summary but <strong>detailed notes for each</strong>. Use the <strong>ISBN number</strong> to find it from your local 
+      library or anywhere else. This page will constantly update as I <strong>read more</strong>, so <strong>bookmark</strong> it 
+      if you want to check back in a few months. Each entry is meant to <strong>capture the essence of the book—its core ideas</strong>, key takeaways, and 
+      practical lessons that stood out during my reading. Whether you're looking for a <strong>quick overview or in-depth reflection</strong>, you'll 
+      find both here. I also include personal insights and how the book relates to broader themes or current events, making the notes 
+      more than just a summary—they're a conversation.
+    </p>    
+    <p class="paragraph mb-3">
+      Sorted with <strong>my top recommendations</strong> up top.
+    </p>
+    
+    <div class="d-flex align-items-center flex-wrap gap-2 fs-5 paragraph mb-1 justify-content-center">
+      <form action="/" method="GET" class="d-flex align-items-center flex-wrap gap-2 fs-5 paragraph mb-4 justify-content-center">
+        <strong>Sort By</strong>
+        <a class="ms-2 me-2 sortLink" href="/?sort=title">Title</a>
+        <a class="me-3 sortLink" href="/?sort=rating">Top</a>
+        
+        <input name="q" class="form-control form-control-sm" type="search" placeholder="Search For Book" value="<%= searchTerm ? searchTerm : '' %>"
+        id="search" style="max-width: 150px;">
+        <button class="btn btn-sm btnColor text-white" type="submit">Search</button>
+        <br>
+        <a href="/add" class="sortLink">Add Book</a>
+      </form>
+    </div>
+    <hr class="bg-white " style="height: 2px;">
+  </main>
+
+  <section class="my-5">
+    <% book.forEach(function(book) { %>
+      <div class="clearfix">
+        <img
+          src="<%= book.image %>"
+          alt="<%= book.title %>"
+          class="me-4 float-start shadow-lg rounded border"
+          style="width: 130px; height: auto;"
+        />
+  
+        <a class="bookLink text-decoration-none" href="/viewBook/<%= book.id %>">
+          <h1 class="heading bookLink fs-1 d-inline"><%= book.title %></h1>
+        </a>
+  
+        <div class="my-3">
+          <small class="text-secondary"><%= book.created_date %></small>
+          <small class="ms-2 text-secondary">My Rating: <strong><%= book.rating %>/10</strong></small>
+        </div>
+  
+        <p class="paragraph mt-2"><%= book.summary %></p>
+  
+        <a href="/viewBook/<%= book.id %>" class="sortLink fs-4">Read Notes</a>
+      </div>
+    <% }) %>
+  </section>
+  
+  <%- include("partials/footer.ejs") %>

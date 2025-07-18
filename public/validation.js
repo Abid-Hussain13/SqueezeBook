@@ -1,0 +1,93 @@
+$(document).ready(function () {
+  $('.tab a').on('click', function (e) {
+    e.preventDefault();
+
+    $(this).parent().addClass('active');
+    $(this).parent().siblings().removeClass('active');
+
+    const target = $(this).attr('href');
+
+    $('.tab-content > div').hide();
+    $(target).fadeIn(600);
+  });
+
+  const hash = window.location.hash;
+  if (hash === '#login') {
+    $('.tab a[href="#login"]').click();
+  }
+});
+
+
+
+$(document).ready(function(){
+  $(".signup-form").on("submit",function(e){
+    e.preventDefault();
+
+    $(".error").text("");
+
+    let isValid = true;
+    let fName = $("#fName").val().trim();
+     let lName = $("#lName").val().trim();
+    let email = $("#email").val().trim();
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    let password = $("#password").val().trim();
+
+    
+    if(fName === ""){
+      $("#fName").next(".error").text("Please Enter First Name");
+      isValid = false;
+    }
+    else if(lName === ""){
+      $("#lName").next(".error").text("Please Enter Last Name");
+      isValid = false;
+    }
+    else if(email === ""){
+      $("#email").next(".error").text("Please Enter Email");
+      isValid = false;
+    }else if(!emailPattern.test(email)){
+      $("#email").next(".error").text("Please Enter Valid Email");
+      isValid = false;
+    }
+    else if(password === ""){
+      $("#password").next(".error").text("Please Enter Password");
+      isValid = false;
+    }else if(password.length < 8){
+      $("#password").next(".error").text("Password must be at least 8 charaters");
+      isValid = false;
+    }
+    if(isValid){
+      this.submit();
+    }
+  })
+});
+
+$(document).ready(function(){
+  $(".login-form").on("submit",function(e){
+    e.preventDefault();
+
+    $(".error").text("");
+    let isValids = true;
+    let loginemail = $("#loginemail").val().trim();
+    let loginpassword = $("#loginpassword").val().trim();
+    let EmailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if(loginemail === ""){
+      $("#loginemail").next(".error").text("Please Enter Email");
+      isValids = false;
+    }else if(!EmailPattern.test(loginemail)){
+      $("#loginemail").next(".error").text("Please Enter Valid Email");
+      isValids = false;
+    }
+    else if(loginpassword === ""){
+      $("#loginpassword").next(".error").text("Please Enter Password");
+      isValids = false;
+    }else if(loginpassword.length < 8){
+      $("#loginpassword").next(".error").text("Password must be at least 8 charaters");
+      isValids = false;
+    }
+    if(isValids){
+      this.submit();
+    }
+  })
+})
+
+

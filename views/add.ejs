@@ -1,0 +1,48 @@
+<%- include("partials/header.ejs") %>
+  <main class="container section">
+    <% if (typeof error !=='undefined' ) { %>
+      <p class="text-danger">
+        <%= error %>
+      </p>
+      <% } %>
+        <form action="/add" method="POST">
+          <div class="row">
+            <% if (locals.book && locals.book.id) { %>
+              <input type="hidden" name="id" value="<%= book.id %>">
+              <% } %>
+                <div class="col-4 mb-3">
+                  <label for="isbn" class="form-label paragraph">ISBN</label>
+                  <input type="text" class="form-control" id="isbn" value="<%= book ? book.isbn : '' %>" name="isbn" placeholder="Enter ISBN" required>
+                </div>
+                <div class="col-4 mb-3">
+                  <label for="rating" class="form-label paragraph">My Rating</label>
+                  <input type="number" class="form-control" id="rating" name="rating" value="<%= book? book.rating : '' %>"
+                    placeholder="Enter Rating" required>
+                </div>
+                <div class="col-4 mb-3">
+                  <label for="status" class="form-label paragraph">Books Status</label>
+                  <select class="form-control" name="status" id="status">
+                    <% if (book && book.status) { %>
+                      <option value="<%= book.status %>" selected><%= book.status %></option>
+                    <% } %>
+                    <option value="Select">Select</option>
+                    <option name="public" value="public">Public</option>
+                    <option name="private" value="private">Private</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="summary" class="form-label paragraph">Summary</label>
+                  <textarea class="form-control" id="summary" name="summary" rows="4"
+                    placeholder="Write Summary about book here"><%= book? book.summary : '' %></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="notes" class="form-label paragraph">Notes</label>
+                  <textarea class="form-control" rows="4" name="notes" id="notes"
+                    placeholder="Write your notes here"><%= book? book.notes : '' %></textarea>
+                </div>
+                <button type="submit" class="btn btn-success mb-5">Submit</button>
+          </div>
+        </form>
+  </main>
+
+  <%- include("partials/footer.ejs") %>

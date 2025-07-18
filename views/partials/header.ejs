@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+
+<body class="container">
+  <nav class="navbar navbar-expand-lg bg-body-dark-subtle rounded">
+    <div class="container-fluid mb-1">
+      <a class="text-decoration-none heading mt-2 ms-3" href="/">SqueezeBook</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto me-3 mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active me-3 text-white" aria-current="page" href="/exploreBooks">Explore Books</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-3 text-white" href="/myBooks">My Books</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-2 text-white" href="/howItWork">How it works</a>
+          </li>
+        </ul>
+        <div class="d-flex" role="presentation">
+          <% if(user){ %>
+            <% if(user.profile_pic){ %>
+              <img id="userPic" src="<%= user.profile_pic %>" class="rounded-circle me-3" width="40" height="40 "
+                alt="User Picture">
+              <% }else{ %>
+                <div id="userPic"
+                  class="rounded-circle me-3 profileName bg-white d-flex align-items-center justify-content-center"
+                  style="width: 40px; height: 40px; font-weight: bold; font-size: 1rem; cursor: pointer;"
+                  alt="User Name Text">
+                  <%= user.fname ? user.fname[0].toUpperCase() : "" %>
+                  <%= user.lname ? user.lname[0].toUpperCase() : "" %>
+                </div>
+
+                <% } %>
+                  <a class="btn logout btn-outline btnColor text-white me-3" style="display: none;"
+                    href="/logout">Logout</a>
+                  <% }else{ %>
+                    <a class="btn  btn-outline btnColor text-white me-3" href="/signup#login">Login</a>
+                    <% } %>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <header>
+    <div class="mb-3">
+
+    </div>
+  </header>
