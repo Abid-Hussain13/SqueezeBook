@@ -1,6 +1,5 @@
 <%- include("partials/header.ejs") %>
 
-    <body>
         <% if(!user){ %>
             <main class="section">
             <h1 class="secHeading text-white text-center mb-4">You are not logged in</h1>
@@ -19,15 +18,15 @@
             <main class="section">
             <h1 class="secHeading text-center mb-4">Your Books </h1>
             <div class="d-flex align-items-center flex-wrap gap-2 fs-5 paragraph justify-content-center">
-                <form action="/search" method="GET"
+                <form action="/myBooks" method="GET"
                     class="d-flex align-items-center flex-wrap gap-2 fs-5 paragraph mb-4 justify-content-center">
                     <strong>Sort By</strong>
-                    <a class="ms-2 me-2 sortLink" href="/myBooks?sort=title">Title</a>
-                    <a class="me-3 sortLink" href="/myBooks?sort=rating">Top</a>
+                    <a class="ms-2 me-2 sortLink adjustScreen" href="/myBooks?sort=title">Title</a>
+                    <a class="me-3 sortLink adjustScreen" href="/myBooks?sort=rating">Top</a>
 
-                    <input name="q" class="form-control form-control-sm" type="search" placeholder="Search For Book"
-                        value="<%= searchTerm ? searchTerm : '' %>" id="search" style="max-width: 150px;">
-                    <button class="btn btn-sm btnColor text-white" type="submit">Search</button>
+                    <input name="q" class="form-control form-control-sm " type="search" placeholder="Search From <%= book.length %> books"
+          value="<%= searchTerm ? searchTerm : '' %>" id="search" style="max-width: 170px;">
+        <button class="btn btn-sm btnColor text-white adjustScreen" type="submit">Search</button>
                     <br>
                     <a href="/add" class="sortLink">Add Book</a>
                 </form>
@@ -38,37 +37,74 @@
                 <h2>No books found matching "<%= searchTerm %>"</h2>
                 <% }%>
             <section class="my-5">
-            <% book.forEach(function(book) { %>
-                <div class="clearfix">
-                    <img src="<%= book.image %>" alt="<%= book.title %>"
-                        class="me-4 float-start shadow-lg rounded border" style="width: 130px; height: auto;" />
+                    <div>
+                        <% book.forEach(function(book) { %>
+                            <div class="clearfix">
+                                <img src="<%= book.image %>" alt="<%= book.title %>"
+                                    class="me-4 float-start shadow-lg rounded border"
+                                    style="width: 130px; height: auto;" />
 
-                    <a class="bookLink text-decoration-none" href="/viewBook/<%= book.id %>">
-                        <h1 class="heading bookLink fs-1 d-inline">
-                            <%= book.title %>
-                        </h1>
-                    </a>
+                                <a class="bookLink text-decoration-none" href="/viewBook/<%= book.id %>">
+                                    <h1 class="heading bookLink fs-1 d-inline">
+                                        <%= book.title %>
+                                    </h1>
+                                </a>
 
-                    <div class="my-3">
-                        <small class="text-secondary">
-                            <%= book.created_date %>
-                        </small>
-                        <small class="ms-2 text-secondary">My Rating: <strong class="ms-1">
-                                <%= book.rating %>/10
-                            </strong></small>
-                            <small class="ms-2 text-secondary">Status: <strong class="ms-1">
-                                <%= book.status %>
-                            </strong></small>
+                                <div class="my-3">
+                                    <small class="text-secondary">
+                                        <%= book.created_date %>
+                                    </small>
+                                    <small class="ms-2 text-secondary">My Rating: <strong>
+                                            <%= book.rating %>/10
+                                        </strong></small>
+                                </div>
+
+                                <p class="paragraph mt-2">
+                                    <%= book.summary %>
+                                </p>
+
+                                <a href="/viewBook/<%= book.id %>" class="sortLink fs-4">Read Notes</a>
+                            </div>
+                            <% }) %>
                     </div>
-
-                    <p class="paragraph mt-2">
-                        <%= book.summary %>
-                    </p>
-
-                    <a href="/viewBook/<%= book.id %>" class="sortLink fs-4">Read Notes</a>
-                </div>
-                <% }) %>
-        </section>
+                    <% if(totalPages > 1){ %>
+                        <div class="Pagination">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination m-0">
+                                    <% if(currentPage> 1){ %>
+                                        <li class="page-item ">
+                                            <a class="page-link fw-medium"
+                                                href="?page=<%= currentPage - 1 %>&sort=<%= sortBy || ''%>&q=<%= searchTerm || '' %>">Previous</a>
+                                        </li>
+                                        <% }else{ %>
+                                            <li class="page-item disabled">
+                                                <a class="page-link fw-medium">Previous</a>
+                                            </li>
+                                            <% } %>
+                                                <% for(let i=1; i <=totalPages; i++){ %>
+                                                    <li class="page-item <%= i === currentPage? 'active' : '' %>">
+                                                        <a class="page-link fw-medium"
+                                                            href="?page=<%= i %>&sort=<%= sortBy || '' %>&q=<%= searchTerm || '' %>"
+                                                            aria-current="page">
+                                                            <%= i %>
+                                                        </a>
+                                                    </li>
+                                                    <% } %>
+                                                        <% if(currentPage < totalPages) { %>
+                                                            <li class="page-item">
+                                                                <a class="page-link fw-medium"
+                                                                    href="?page=<%= currentPage + 1 %>&sort=<%= sortBy || '' %>&q=<%= searchTerm || '' %>">Next</a>
+                                                            </li>
+                                                            <% } else{%>
+                                                                <li class="page-item disabled">
+                                                                    <a class="page-link fw-medium">Next</a>
+                                                                </li>
+                                                                <% } %>
+                                </ul>
+                            </nav>
+                        </div>
+                        <% } %>
+                </section>
     <% }%>
 
 

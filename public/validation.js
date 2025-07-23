@@ -91,3 +91,39 @@ $(document).ready(function(){
 })
 
 
+// Book Submittion Validation 
+
+$(document).ready(function(){
+  $(".book-form").on("submit",function(e){
+    e.preventDefault();
+
+    $(".error").text("");
+
+    let isValid = true;
+    let isbn = $("#isbn").val().trim();
+    let rating = $("#rating").val().trim();
+    let status = $("#status").val().trim();
+
+    if(isbn === ""){
+      $("#isbn").next(".error").text("Please Enter ISBN");
+      isValid = false;
+    }else if(isbn.length < 10 || isbn.length > 13 || isbn.length == 11 || isbn.length == 12){
+      $("#isbn").next(".error").text("Please Enter Valid ISBN");
+      isValid = false;
+    }
+    else if(rating === ""){
+      $("#rating").next(".error").text("Please Enter Rating");
+      isValid = false;
+    }else if(rating > 10 || rating <=0 ){
+      $("#rating").next(".error").text("Please Enter Valid Rating");
+      isValid = false;
+    }
+    else if(status === "Select"){
+      $("#status").next(".error").text("Please Enter Status");
+      isValid = false;
+    }
+    if(isValid){
+      this.submit();
+    }
+  })
+})

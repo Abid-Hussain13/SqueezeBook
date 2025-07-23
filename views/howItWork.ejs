@@ -1,7 +1,57 @@
-<%- include("partials/header.ejs") %>
-<body>
-    <main class="section">
-    <h1>How It Works</h1>
-    </main>
+<%- include("partials/header") %>
 
-<%- include("partials/footer.ejs") %>
+<div class="section">
+  <h1 class="secHeading text-center mb-4">How It Works</h1>
+
+  <div class="paragraph">
+    <p>
+      Welcome to <strong>BookSpace</strong> – your space to share, explore, and discover books with fellow readers.
+      Here’s a quick overview of how everything works:
+    </p>
+
+    <hr class="mb-4">
+
+    <h3 class="heading">1. Browse & Discover</h3>
+    <p>
+      On the <a href="/" class="bookLink">Explore Books</a> page, you’ll find a curated list of books made public by users.
+      Use the <strong>search bar</strong> to find books by title or use the <strong>sort options</strong> (Title, Rating) to reorder them as you like.
+    </p>
+
+    <h3 class="heading">2. Sign Up & Login</h3>
+    <p>
+      To contribute to the collection, simply <a href="/login" class="bookLink">log in</a> or <a href="/signup" class="bookLink">sign up</a>.
+      Our sign-up form validates your inputs for safety and clarity — all done instantly in your browser.
+    </p>
+
+    <h3 class="heading">3. Add Your Books</h3>
+    <p>
+      Once signed in, click on <a href="/add" class="bookLink">Add Book</a> from the main menu.
+      Fill out the form with your book’s title, description, and optional rating.
+      Your book will then appear in your personal collection.
+    </p>
+
+    <h3 class="heading">4. Manage Your Collection</h3>
+    <p>
+      On your profile, you can view, update, or delete your books anytime.
+      If you'd like to share them with the public, simply change the visibility status to <strong>public</strong>.
+    </p>
+
+    <h3 class="heading">5. Seamless Experience</h3>
+    <p>
+      We’ve optimized the experience with features like:
+      <ul>
+        <li>Smart scroll memory — sorting/searching won’t disrupt your reading flow.</li>
+        <li>Interactive navigation bar that stays with you.</li>
+        <li>Validation to ensure secure and smooth form submissions.</li>
+      </ul>
+    </p>
+
+    <hr class="mb-1">
+
+    <p class="text-center">
+      Ready to dive in? Head over to the <a href="/" class="bookLink">Explore</a> page and start discovering!
+    </p>
+  </div>
+</div>
+
+<%- include("partials/footer") %>

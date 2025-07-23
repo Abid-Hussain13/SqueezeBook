@@ -5,31 +5,45 @@
         <%= error %>
       </p>
       <% } %>
-        <form action="/add" method="POST">
+        <form action="/add" method="POST" class="book-form">
           <div class="row">
             <% if (locals.book && locals.book.id) { %>
               <input type="hidden" name="id" value="<%= book.id %>">
               <% } %>
-                <div class="col-4 mb-3">
-                  <label for="isbn" class="form-label paragraph">ISBN</label>
-                  <input type="text" class="form-control" id="isbn" value="<%= book ? book.isbn : '' %>" name="isbn" placeholder="Enter ISBN" required>
+                <div class="col-4 mb-1">
+                  <label for="isbn" class="form-label paragraph">ISBN <span class="defaulColor">*</span></label>
+                  <input type="text" class="form-control" id="isbn" value="<%= book ? book.isbn : '' %>" name="isbn"
+                    placeholder="Eg: 9781501197277" required>
+                    <p class="error defaulColor mt-1"></p>
                 </div>
-                <div class="col-4 mb-3">
-                  <label for="rating" class="form-label paragraph">My Rating</label>
-                  <input type="number" class="form-control" id="rating" name="rating" value="<%= book? book.rating : '' %>"
-                    placeholder="Enter Rating" required>
+                <div class="col-4 mb-1">
+                  <label for="rating" class="form-label paragraph">My Rating <span class="defaulColor">*</span></label>
+                  <input type="number" class="form-control" id="rating" name="rating"
+                    value="<%= book? book.rating : '' %>" placeholder="From 1 to 10" >
+                    <p class="error defaulColor mt-1"></p>
                 </div>
-                <div class="col-4 mb-3">
-                  <label for="status" class="form-label paragraph">Books Status</label>
-                  <select class="form-control" name="status" id="status">
-                    <% if (book && book.status) { %>
-                      <option value="<%= book.status %>" selected><%= book.status %></option>
-                    <% } %>
-                    <option value="Select">Select</option>
-                    <option name="public" value="public">Public</option>
-                    <option name="private" value="private">Private</option>
+                <div class="col-4 mb-1">
+                  <label for="status" class="form-label paragraph">Books Status <span class="defaulColor">*</span></label>
+                  <select class="form-control" name="status" id="status" required>
+                    <% if (!book || !book.status || book.status==="Select" ) { %>
+                      <option value="Select" selected>Select</option>
+                      <% } else { %>
+                        <option value="<%= book.status %>" selected>
+                          <%= book.status.charAt(0).toUpperCase() + book.status.slice(1) %>
+                        </option>
+                        <% } %>
+
+                          <% if (!book || book.status !=="public" ) { %>
+                            <option value="public">Public</option>
+                            <% } %>
+
+                              <% if (!book || book.status !=="private" ) { %>
+                                <option value="private">Private</option>
+                                <% } %>
                   </select>
+                  <p class="error defaulColor mt-1"></p>
                 </div>
+
                 <div class="mb-3">
                   <label for="summary" class="form-label paragraph">Summary</label>
                   <textarea class="form-control" id="summary" name="summary" rows="4"
@@ -40,7 +54,14 @@
                   <textarea class="form-control" rows="4" name="notes" id="notes"
                     placeholder="Write your notes here"><%= book? book.notes : '' %></textarea>
                 </div>
-                <button type="submit" class="btn btn-success mb-5">Submit</button>
+                <% if(book && book.id){ %>
+                  <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btnColor w-75  text-white fs-5">Edit</button>
+                  </div>
+                  
+                <% }else{ %>
+                <button type="submit" class="btn subBtn btnColor text-white fs-5">Submit</button>
+                <% } %>
           </div>
         </form>
   </main>

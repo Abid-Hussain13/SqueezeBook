@@ -4,3 +4,4 @@ node_modules/
 .DS_Store
 *.log
 "@ | Set-Content .gitignore
+client_secret_878623875085-7rpo24e7jg9su79sq7qa13srfm7n0tge.apps.googleusercontent.com.json

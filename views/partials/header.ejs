@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>SqueezeBook</title>
+  <link rel="shortcut icon" href="/img/sb.png" type="image/png">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +16,8 @@
 </head>
 
 <body class="container">
-  <nav class="navbar navbar-expand-lg bg-body-dark-subtle rounded">
+  <div class="page-wrapper">
+  <nav class="navbar nav navbar-expand-lg bg-body-dark-subtle rounded">
     <div class="container-fluid mb-1">
       <a class="text-decoration-none heading mt-2 ms-3" href="/">SqueezeBook</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -34,6 +36,7 @@
             <a class="nav-link me-2 text-white" href="/howItWork">How it works</a>
           </li>
         </ul>
+        <a class="btn  btn-outline btnColor text-white me-2" href="/add">Add Book</a>
         <div class="d-flex" role="presentation">
           <% if(user){ %>
             <% if(user.profile_pic){ %>
@@ -58,8 +61,3 @@
       </div>
     </div>
   </nav>
-  <header>
-    <div class="mb-3">
-
-    </div>
-  </header>

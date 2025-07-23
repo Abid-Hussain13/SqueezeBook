@@ -1,29 +1,30 @@
-$(document).ready(function(){
-  $("#userPic").on("click", function(e){
+$(document).ready(function () {
+  $("#userPic").on("click", function (e) {
     e.stopPropagation();
     $(".logout").toggle();
   })
 
-  $(document).on("click", function(){
+  $(document).on("click", function () {
     $(".logout").hide();
   })
 })
 
 $(".logout").on("click", function (e) {
-    e.stopPropagation();
-  });
+  e.stopPropagation();
+});
 
-  window.addEventListener("beforeunload", function () {
+$(document).ready(function () {
+  const scrollPos = sessionStorage.getItem("scrollPosition");
+  if (scrollPos !== null) {
+    window.scrollTo(0, parseInt(scrollPos));
+    sessionStorage.removeItem("scrollPosition");
+  }
+
+  $(".adjustScreen").on("click", function () {
     sessionStorage.setItem("scrollPosition", window.scrollY);
   });
+});
 
-  window.addEventListener("load", function () {
-    const scrollPos = sessionStorage.getItem("scrollPosition");
-    if (scrollPos !== null) {
-      window.scrollTo(0, parseInt(scrollPos));
-      sessionStorage.removeItem("scrollPosition"); 
-    }
-  });
 
 
 

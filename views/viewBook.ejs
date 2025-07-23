@@ -14,8 +14,10 @@
         <pre class="paragraph mt-2"><%= book.summary %></pre>
         <h1 class="bookHeading fs-1 mt-5">Notes</h1>
         <pre class="paragraph mb-4"><%= book.notes %></pre>
+        <% if(user_id == book.user_id) { %>
         <a href="/edit/<%= book.id %>" class="sortLink fs-4">Edit</a>
         <a href="/delete/<%= book.id %>" class="ms-3 sortLink fs-4">Delete</a>
+        <% } %>
       </section>
 
 <%- include("partials/footer.ejs") %>

@@ -3,7 +3,25 @@ body{
     background-color: #1e1e1e !important;
     color: white !important;
 }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  
+}
+.page-wrapper {
+  flex: 1;
+}
+.defaulColor{
+    color: #179E79 ;
+}
+.searchBar{
+    font-size: 10px !important;
+}
 .heading{
+
     font-family: 'Inter', 'Segoe UI', 'Poppins', sans-serif;
     font-size: 35px;
     margin-bottom: 10px !important;
@@ -74,12 +92,36 @@ pre{
     transform: scale(1.05);
     background-color: #179e7ac9 !important;
 }
+.btnAdd{
+    max-width: 95% !important;
+}
 .section{
     margin-bottom: 60px !important;
-    margin-top: 120px;
+    margin-top: 140px;
+}
+.Pagination{
+    margin-top: -30px !important;
+}
+.pagination .page-item.active .page-link {
+  background-color: #179E79;
+  border-color: #179E79;
+  color: white !important;
+}
+.pagination .page-link {
+  color: #179E79 !important;
+}
+.page-link:hover {
+  background-color: #f0f0f0 !important;
+  color: #179e7ac9 !important;
+  transform: scale(1.05) !important;
+  border-color:#179E79 !important;
+}
+.page-item.active>.page-link:hover{
+    color: #179E79 !important;
 }
 
-nav{
+
+.nav{
     background-color: 	#1a1a1a !important;
     position: fixed !important;
   top: 0 !important;
@@ -87,6 +129,14 @@ nav{
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
+}
+footer{
+     background-color: 	#1A1A1A !important;
+     width: 125%;
+     position: relative;
+     left: 50%;
+     transform: translateX(-50%);
+     z-index: 1000;
 }
 .nav-link{
     padding: 0 !important;
@@ -103,3 +153,6 @@ nav{
     transform: scale(1.05);
     color: #179e7acc;
 }
+
+ /* responsive css */
+
