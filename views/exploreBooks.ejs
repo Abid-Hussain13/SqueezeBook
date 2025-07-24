@@ -1,19 +1,17 @@
 <%- include("partials/header.ejs") %>
-
-    <body>
-        <main class="section">
-            <h1 class="secHeading mb-5 text-center">Explore Books</h1>
+        <main class="section headingSection">
+            <h1 class="secHeading mb-4 mb-lg-5 text-center">Explore Books</h1>
             <div class="d-flex align-items-center flex-wrap gap-2 fs-5 paragraph mb-1 justify-content-center">
                 <form action="/exploreBooks" method="GET"
-                    class="d-flex align-items-center flex-wrap gap-2 fs-5 paragraph mb-4 justify-content-center">
+                    class="d-flex align-items-center flex-wrap gap-2 fs-5 paragraph  mb-md-4 justify-content-center">
                     <strong>Sort By</strong>
-                    <a class="ms-2 me-2 sortLink adjustScreen" href="/exploreBooks?sortBy=title">Title</a>
-                    <a class="me-3 sortLink adjustScreen" href="/exploreBooks?sortBy=rating">Top</a>
-<input name="q" class="form-control form-control-sm " type="search" placeholder="Search From <%= book.length %> books"
-          value="<%= searchTerm ? searchTerm : '' %>" id="search" style="max-width: 170px;">
-        <button class="btn btn-sm btnColor text-white adjustScreen" type="submit">Search</button>
+                    <a class="me-1 ms-2 me-md-2 sortLink adjustScreen" href="/exploreBooks?sortBy=title">Title</a>
+                    <a class="me-1 me-md-3 sortLink adjustScreen" href="/exploreBooks?sortBy=rating">Top</a>
+<input name="q" class="form-control form-control-sm searchBar" type="search" placeholder="Search From <%= book.length %> books"
+          value="<%= searchTerm ? searchTerm : '' %>" id="search">
+        <button class="btn btn-sm btnColor text-white serachbtn " type="submit">Search</button>
                     <br>
-                    <a href="/add" class="sortLink">Add Book</a>
+                    <a href="/add" class="sortLink btnres">Add Book</a>
                 </form>
             </div>
             <hr class="bg-white " style="height: 2px;">
@@ -23,12 +21,11 @@
             <h2>No books found matching "<%= searchTerm %>"</h2>
             <% }%>
 
-                <section class="my-5">
+                <section class="my-5 headingSection">
                     <div>
                         <% book.forEach(function(book) { %>
                             <div class="clearfix">
-                                <img src="<%= book.image %>" alt="<%= book.title %>"
-                                    class="me-4 float-start shadow-lg rounded border"
+                                <img src="<%= book.image %>" alt="<%= book.title %>" class="me-4 float-start shadow-lg rounded border"
                                     style="width: 130px; height: auto;" />
 
                                 <a class="bookLink text-decoration-none" href="/viewBook/<%= book.id %>">
@@ -50,7 +47,7 @@
                                     <%= book.summary %>
                                 </p>
 
-                                <a href="/viewBook/<%= book.id %>" class="sortLink fs-4">Read Notes</a>
+                                <a href="/viewBook/<%= book.id %>" class="sortLink fs-5 fs-md-3">Read Notes</a>
                             </div>
                             <% }) %>
                     </div>
@@ -71,8 +68,7 @@
                                                 <% for(let i=1; i <=totalPages; i++){ %>
                                                     <li class="page-item <%= i === currentPage? 'active' : '' %>">
                                                         <a class="page-link fw-medium"
-                                                            href="?page=<%= i %>&sort=<%= sortBy || '' %>&q=<%= searchTerm || '' %>"
-                                                            aria-current="page">
+                                                            href="?page=<%= i %>&sort=<%= sortBy || '' %>&q=<%= searchTerm || '' %>" aria-current="page">
                                                             <%= i %>
                                                         </a>
                                                     </li>
@@ -90,8 +86,7 @@
                                 </ul>
                             </nav>
                         </div>
-                        <% } %>
+                        <% }%>
                 </section>
-                </main>
 
                 <%- include("partials/footer.ejs") %>

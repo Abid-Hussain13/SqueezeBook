@@ -15,11 +15,11 @@
     integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
 
-<body class="container">
-  <div class="page-wrapper">
+<body class="container-fluid">
+  
   <nav class="navbar nav navbar-expand-lg bg-body-dark-subtle rounded">
     <div class="container-fluid mb-1">
-      <a class="text-decoration-none heading mt-2 ms-3" href="/">SqueezeBook</a>
+      <a class="text-decoration-none heading ms-3 mt-2 text-start" href="/">SqueezeBook</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -27,24 +27,24 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto me-3 mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active me-3 text-white" aria-current="page" href="/exploreBooks">Explore Books</a>
+            <a class="nav-link active ms-4 mt-2 mt-lg-0 me-3 text-white" aria-current="page" href="/exploreBooks">Explore Books</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-3 text-white" href="/myBooks">My Books</a>
+            <a class="nav-link mt-1 mt-lg-0 ms-4 ms-lg-0 me-3 text-white" href="/myBooks">My Books</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-2 text-white" href="/howItWork">How it works</a>
+            <a class="nav-link mt-1 mt-lg-0 ms-4 ms-lg-0 me-2 text-white" href="/howItWork">How it works</a>
           </li>
         </ul>
-        <a class="btn  btn-outline btnColor text-white me-2" href="/add">Add Book</a>
+        <a class="btn  btn-outline btnColor text-white me-2 mt-1 mt-lg-0 ms-4 ms-lg-0" href="/add">Add Book</a>
         <div class="d-flex" role="presentation">
           <% if(user){ %>
             <% if(user.profile_pic){ %>
-              <img id="userPic" src="<%= user.profile_pic %>" class="rounded-circle me-3" width="40" height="40 "
+              <img id="userPic" src="<%= user.profile_pic %>" class="rounded-circle me-3 mt-1 mt-lg-0 ms-4 ms-lg-0" width="40" height="40 "
                 alt="User Picture">
               <% }else{ %>
                 <div id="userPic"
-                  class="rounded-circle me-3 profileName bg-white d-flex align-items-center justify-content-center"
+                  class="rounded-circle me-3 profileName bg-white d-flex align-items-center justify-content-center mt-2 mt-lg-0 ms-4 ms-lg-0"
                   style="width: 40px; height: 40px; font-weight: bold; font-size: 1rem; cursor: pointer;"
                   alt="User Name Text">
                   <%= user.fname ? user.fname[0].toUpperCase() : "" %>
@@ -52,12 +52,14 @@
                 </div>
 
                 <% } %>
-                  <a class="btn logout btn-outline btnColor text-white me-3" style="display: none;"
+                  <a class="btn logout btn-outline btnColor text-white me-3 mt-1 mt-lg-0 ms-4 ms-lg-0" style="display: none;"
                     href="/logout">Logout</a>
                   <% }else{ %>
-                    <a class="btn  btn-outline btnColor text-white me-3" href="/signup#login">Login</a>
+                    <a class="btn  btn-outline btnColor text-white me-3 mt-2 mt-lg-0 ms-4 ms-lg-0" href="/signup#login">Login</a>
                     <% } %>
         </div>
       </div>
     </div>
   </nav>
+  <div class="defaultProp">
+  <div class="page-wrapper">

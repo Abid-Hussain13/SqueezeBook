@@ -1,158 +1,319 @@
-body{
-    max-width: 52em !important;
+body {
     background-color: #1e1e1e !important;
     color: white !important;
+    font-size: 48px;
 }
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  
+
+html,
+body {
+    height: 100%;
+    margin: 0 !important;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+.defaultProp{
+    max-width: 52em !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 .page-wrapper {
-  flex: 1;
+    flex: 1;
 }
-.defaulColor{
-    color: #179E79 ;
-}
-.searchBar{
-    font-size: 10px !important;
-}
-.heading{
 
+.defaulColor {
+    color: #179E79;
+}
+
+.searchBar{
+    max-width: 170px;
+    font-size: 15px !important;
+}
+
+.heading {
     font-family: 'Inter', 'Segoe UI', 'Poppins', sans-serif;
     font-size: 35px;
     margin-bottom: 10px !important;
-    color: #179E79 ;
+    color: #179E79;
 }
-.heading:hover{
+
+.heading:hover {
     color: #179e7acc;
 }
-.secHeading{
-    font-family:"Raleway", sans-serif;
+
+.secHeading {
+    font-family: "Raleway", sans-serif;
     font-size: 45px;
     margin-bottom: 10px !important;
     color: #179E79 !important;
 }
-.paragraph{
-    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+.paragraph {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 19px;
     color: #e0e0e0 !important;
     text-align: justify;
 }
-strong{
+
+strong {
     color: #e6e6e6 !important;
 }
-.inputFields{
+
+.inputFields {
     width: 40px !important;
 }
-.bookHeading{
-    font-family:"Raleway", sans-serif;
+
+.bookHeading {
+    font-family: "Raleway", sans-serif;
     font-size: 45px;
     margin-bottom: 10px !important;
     color: #3498db !important;
     text-decoration: none !important;
 }
-.bookLink{
+
+.bookLink {
     font-family: "Raleway", sans-serif !important;
-    color: #3498db  ;
-    text-decoration: none ;
+    color: #3498db;
+    text-decoration: none;
     transition: color 0.3s ease, text-decoration 0.3s ease-;
 }
-.bookLink:hover{
-    color: #3498dbd5 ;
+
+.bookLink:hover {
+    color: #3498dbd5;
 }
+
 .sortLink {
-    font-family:"Raleway", sans-serif;
-  color: #3498db !important;
-  text-decoration: none !important;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease 0.1s;
+    font-family: "Raleway", sans-serif;
+    font-size: 20px;
+    color: #3498db !important;
+    text-decoration: none !important;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease 0.1s;
 }
 
 .sortLink:hover {
-  color: #3498dbd5 !important;
-  border-bottom: 2px solid #3498dbd5;
+    color: #3498dbd5 !important;
+    border-bottom: 2px solid #3498dbd5;
 }
 
-pre{
-    white-space: pre-wrap; 
-    max-width: 100%; 
+pre {
+    white-space: pre-wrap;
+    max-width: 100%;
 }
-.clearfix{
+
+.clearfix {
     margin-bottom: 70px;
 }
-.btnColor{
+
+.btnColor {
     background-color: #179E79 !important;
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
-.btnColor:hover{
+
+.btnColor:hover {
     transform: scale(1.05);
     background-color: #179e7ac9 !important;
 }
-.btnAdd{
+
+.btnAdd {
     max-width: 95% !important;
 }
-.section{
+
+.section {
     margin-bottom: 60px !important;
     margin-top: 140px;
 }
-.Pagination{
+
+.Pagination {
     margin-top: -30px !important;
 }
+
 .pagination .page-item.active .page-link {
-  background-color: #179E79;
-  border-color: #179E79;
-  color: white !important;
+    background-color: #179E79;
+    border-color: #179E79;
+    color: white !important;
 }
+
 .pagination .page-link {
-  color: #179E79 !important;
+    color: #179E79 !important;
 }
+
 .page-link:hover {
-  background-color: #f0f0f0 !important;
-  color: #179e7ac9 !important;
-  transform: scale(1.05) !important;
-  border-color:#179E79 !important;
+    background-color: #f0f0f0 !important;
+    color: #179e7ac9 !important;
+    transform: scale(1.05) !important;
+    border-color: #179E79 !important;
 }
-.page-item.active>.page-link:hover{
+
+.page-item.active>.page-link:hover {
     color: #179E79 !important;
 }
 
 
-.nav{
-    background-color: 	#1a1a1a !important;
+.nav {
+    background-color: #1a1a1a !important;
     position: fixed !important;
-  top: 0 !important;
-  width: 75% !important;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
+    top: 0 !important;
+    width: 75% !important;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
 }
-footer{
-     background-color: 	#1A1A1A !important;
-     width: 125%;
-     position: relative;
-     left: 50%;
-     transform: translateX(-50%);
-     z-index: 1000;
+
+footer {
+    background-color: #1A1A1A !important;
+    width: 75%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1000;
 }
-.nav-link{
+
+.nav-link {
     padding: 0 !important;
 }
-.nav-link:hover{
+
+.nav-link:hover {
     color: rgba(255, 255, 255, 0.822) !important;
 }
-.profileName{
+
+.profileName {
     color: #179E79 !important;
     font-family: "Raleway", sans-serif;
     transition: transform 0.3s ease, color 0.3s ease;
 }
-.profileName:hover{
+
+.profileName:hover {
     transform: scale(1.05);
     color: #179e7acc;
 }
 
- /* responsive css */
+/* responsive css */
 
+@media screen and (min-width: 992px) and (max-width: 1150px) {
+    .nav {
+        width: 90% !important;
+    }
+
+    footer {
+        width: 90% !important;
+    }
+
+    .section {
+        margin-top: 130px;
+    }
+
+    .headingSection {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+}
+
+@media screen and (max-width: 991px){
+    .nav {
+        width: 90% !important;
+    }
+    footer {
+        width: 90% !important;
+    }
+    .section {
+        margin-top: 125px;
+    }
+    .headingSection {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .heading{
+        font-size: 30px;
+    }
+    .secHeading{
+        font-size: 42px;
+    }
+    .paragraph{
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .heading{
+        font-size: 30px;
+    }
+    .secHeading{
+        font-size: 40px;
+    }
+    .paragraph{
+        font-size: 17px;
+    }
+    .searchBar{
+    max-width: 165px !important;
+    font-size: 14px !important;
+}
+.sortLink{
+    font-size: 18px;
+}
+}
+@media screen and (max-width: 679px){
+    .heading{
+        font-size: 28px;
+    }
+    .secHeading{
+        font-size: 32px;
+    }
+    .paragraph{
+        font-size: 15px;
+    }
+    .section{
+        margin-top: 120px;
+    }
+    .searchBar{
+    max-width: 142px !important;
+    font-size: 12px !important;
+    height: 20px !important;
+}
+.serachbtn{
+    height: 28px !important;
+    font-size: 13px !important;
+}
+.sortLink{
+    font-size: 16px;
+}
+.btnres{
+    margin-top: 4px !important;
+}
+}
+
+@media screen and (max-width: 575px){
+    .heading{
+        font-size: 23px;
+    }
+    .secHeading{
+        font-size: 27px;
+    }
+     .nav {
+        width: 100% !important;
+    }
+    footer {
+        width: 100% !important;
+    }
+    .searchBar{
+    max-width: 125px !important;
+    font-size: 10px !important;
+}
+.headingSection{
+    width: 95%;
+}
+.sortLink{
+    font-size: 14px;
+}
+.section{
+    margin-top: 110px;
+}
+}
+
+@media screen and (max-width: 450px){
+   
+    
+}
