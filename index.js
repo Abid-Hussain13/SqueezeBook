@@ -443,15 +443,6 @@ app.get("/auth/google/squeezebook",
   }),
 );
 
-app.get("/auth/google", passport.authenticate("google", {
-  scope: ["profile", "email"]
-}));
-app.get("/auth/google/squeezebook",
-  passport.authenticate("google", {
-    failureRedirect: "/signup",  // or any fallback route
-    successRedirect: "/myBooks" // or wherever you want to redirect after login
-  })
-);
 
 
 passport.use("Google",
@@ -459,7 +450,7 @@ passport.use("Google",
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://squeezebook-production.up.railway.app//auth/google/squeezebook",
+      callbackURL: "https://squeezebook-production.up.railway.app/auth/google/squeezebook",
     }, async function (accessToken, refreshToken, profile, cb) {
       const email = profile.emails?.[0]?.value || "";
       const photo = profile.photos?.[0]?.value || "";
