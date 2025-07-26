@@ -19,7 +19,7 @@
 
     <div class="tab-content">
       <div id="signup">
-        <h1>Sign Up</h1>
+        <h1 class="mainHeading">Sign Up</h1>
         <form action="/signup" method="post" class="signup-form">
 
           <div class="top-row">
@@ -44,9 +44,14 @@
             <p class="error"></p>
           </div>
 
-          <button type="submit" class="button button-block" style="margin-bottom: 15px;">Get Started</button>
-          <a href="/auth/google" class="button button-block" style="display: flex; align-items: center; gap: 10px; justify-content: center;">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 50 50">
+          <button type="submit" class="button button-block getStarted" >Get Started</button>
+          <a href="/auth/google" 
+   class="button button-block" 
+   style="display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none;">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" 
+       width="24" height="24" viewBox="0 0 50 50" 
+       style="flex-shrink: 0;">
     <path d="M 26 2 C 13.308594 2 3 12.308594 3 25 C 3 37.691406 13.308594 48 26 48 C 35.917969 48 
     41.972656 43.4375 45.125 37.78125 C 48.277344 32.125 48.675781 25.480469 47.71875 20.9375 L
      47.53125 20.15625 L 46.75 20.15625 L 26 20.125 L 25 20.125 L 25 30.53125 L 36.4375 30.53125 
@@ -60,8 +65,11 @@
      45.84375 22.15625 C 46.507813 26.191406 46.066406 31.984375 43.375 36.8125 C 40.515625 41.9375 
      35.320313 46 26 46 C 14.386719 46 5 36.609375 5 25 C 5 13.390625 14.386719 4 26 4 Z"></path>
   </svg>
-  Sign up with Google
+
+  <span class="googleText" >Sign up with Google</span>
+
 </a>
+
 
         </form>
       </div>
@@ -71,7 +79,7 @@
         <% if(error){ %>
           <h1><%= error %></h1>
         <% }else{ %>
-        <h1>Login</h1>
+        <h1 class="mainHeading">Login</h1>
         <% } %>
         <form action="/login" method="post" class="login-form">
           <div class="field-wrap">

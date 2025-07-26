@@ -51,11 +51,16 @@
               <%= book.title %>
             </h1>
           </a>
-
-          <div class="my-3">
-            <small class="text-secondary">
-              <%= book.created_date %>
-            </small>
+<% 
+  const date = new Date(book.created_date);
+  const formattedDate = ("0" + date.getDate()).slice(-2) + "/" +
+                        ("0" + (date.getMonth() + 1)).slice(-2) + "/" +
+                        date.getFullYear();
+%>
+                                <div class="my-3">
+                                    <small class="text-secondary">
+                                        Publish: <%= formattedDate %>
+                                    </small>
             <small class="ms-2 text-secondary">My Rating: <strong>
                 <%= book.rating %>/10
               </strong></small>

@@ -1,19 +1,27 @@
 <%- include("partials/header.ejs") %>
         <main class="section headingSection">
             <h1 class="secHeading mb-4 mb-lg-5 text-center">Explore Books</h1>
-            <div class="d-flex align-items-center flex-wrap gap-2 fs-5 paragraph mb-1 justify-content-center">
-                <form action="/exploreBooks" method="GET"
-                    class="d-flex align-items-center flex-wrap gap-2 fs-5 paragraph  mb-md-4 justify-content-center">
-                    <strong>Sort By</strong>
-                    <a class="me-1 ms-2 me-md-2 sortLink adjustScreen" href="/exploreBooks?sortBy=title">Title</a>
-                    <a class="me-1 me-md-3 sortLink adjustScreen" href="/exploreBooks?sortBy=rating">Top</a>
-<input name="q" class="form-control form-control-sm searchBar" type="search" placeholder="Search From <%= book.length %> books"
-          value="<%= searchTerm ? searchTerm : '' %>" id="search">
-        <button class="btn btn-sm btnColor text-white serachbtn " type="submit">Search</button>
-                    <br>
-                    <a href="/add" class="sortLink btnres">Add Book</a>
-                </form>
-            </div>
+            <div class="d-flex align-items-center justify-content-center mt-4 mt-lg-5">
+  <form action="/exploreBooks" method="GET" class="d-flex flex-wrap justify-content-center gap-2 fs-5 paragraph mb-md-4 sortSearchForm">
+    
+    <!-- Sort Section -->
+    <div class="sortBox d-flex align-items-center gap-2 flex-wrap">
+      <strong class="mb-2">Sort By</strong>
+      <a class="sortLink adjustScreen" href="/exploreBooks?sortBy=title">Title</a>
+      <a class="sortLink adjustScreen" href="/exploreBooks?sortBy=rating">Top</a>
+    </div>
+
+    <!-- Search Section -->
+    <div class="searchBox d-flex align-items-center gap-2 flex-wrap">
+      <input name="q" class="form-control form-control-sm searchBar" type="search"
+        placeholder="Search From <%= book.length %> books"
+        value="<%= searchTerm ? searchTerm : '' %>">
+      <button class="btn btn-sm btnColor text-white serachbtn" type="submit">Search</button>
+      <a href="/add" class="sortLink btnres">Add Book</a>
+    </div>
+
+  </form>
+</div>
             <hr class="bg-white " style="height: 2px;">
         </main>
 
@@ -33,10 +41,15 @@
                                         <%= book.title %>
                                     </h1>
                                 </a>
-
+<% 
+  const date = new Date(book.created_date);
+  const formattedDate = ("0" + date.getDate()).slice(-2) + "/" +
+                        ("0" + (date.getMonth() + 1)).slice(-2) + "/" +
+                        date.getFullYear();
+%>
                                 <div class="my-3">
                                     <small class="text-secondary">
-                                        <%= book.created_date %>
+                                       Publish: <%= formattedDate %>
                                     </small>
                                     <small class="ms-2 text-secondary">My Rating: <strong>
                                             <%= book.rating %>/10

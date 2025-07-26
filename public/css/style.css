@@ -149,24 +149,29 @@ pre {
     color: #179E79 !important;
 }
 
-
 .nav {
-    background-color: #1a1a1a !important;
+    background-color: #181818 !important;
     position: fixed !important;
     top: 0 !important;
     width: 75% !important;
     left: 50%;
     transform: translateX(-50%);
+    box-shadow: #179E79 0px 0px 8px;
     z-index: 1000;
 }
 
 footer {
-    background-color: #1A1A1A !important;
+    background-color: #181818 !important;
     width: 75%;
     position: relative;
+    z-index: 1000;
     margin-left: auto;
     margin-right: auto;
-    z-index: 1000;
+    box-shadow: #179E79 0px 0px 8px;
+}
+
+.footerText{
+    font-size: 13px;
 }
 
 .nav-link {
@@ -301,6 +306,9 @@ footer {
     .searchBar{
     max-width: 125px !important;
     font-size: 10px !important;
+}
+.footerText{
+    font-size: 8px;
 }
 .headingSection{
     width: 95%;

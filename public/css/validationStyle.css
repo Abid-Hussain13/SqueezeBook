@@ -81,6 +81,26 @@
 .error{
 	color: rgba(255, 0, 0, 0.712);
 }
+.mainHeading{
+	font-size: 30px;
+}
+.getStarted{
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 15px;
+}
+.googleText{
+	font-size: 24px ;
+	font-weight: bold ;
+}
+@media screen and (max-width: 450px){
+	.googleText{
+		font-size: 14px;
+	}
+	.getStarted{
+		font-size: 14px !important;
+	}
+}
  input, textarea {
 	 font-size: 18px;
 	 display: block;

@@ -1,18 +1,25 @@
 <%- include("partials/header.ejs") %>  
-<section class="section clearfix">
+<section class="section clearfix headingSection">
         <img class="me-5 float-start" src="<%= book.image %>" alt="<%= book.title %>" style="width: 130px; height: auto;">
-        <h1 class="bookHeading"><%= book.title %> </h1>
+        <h1 class="bookLink"><%= book.title %> </h1>
         <div class="my-4 fs-5">
           <small class="text-secondary ">ISBN : <%= book.isbn %></small><br>
-          <small class="text-secondary">Read Date : <%= book.created_date %></small><br>
+          <% 
+  const date = new Date(book.created_date);
+  const formattedDate = ("0" + date.getDate()).slice(-2) + "/" +
+                        ("0" + (date.getMonth() + 1)).slice(-2) + "/" +
+                        date.getFullYear();
+%>
+<small class="text-secondary">Publish Date : <%= formattedDate %></small><br>
+
           <small class="text-secondary">My Rating : <strong><%= book.rating %>/10</strong></small>
-          <small class="text-secondary ms-3">Status : <strong><%= book.status %></strong></small>
+          <small class="text-secondary mss-3">Status : <strong><%= book.status %></strong></small>
         </div>
       </section>
-      <section class="my-5">
-        <h1 class="bookHeading mt-3 fs-1">Summary</h1>
+      <section class="my-5 headingSection">
+        <h1 class="bookLink mt-3 fs-1">Summary</h1>
         <pre class="paragraph mt-2"><%= book.summary %></pre>
-        <h1 class="bookHeading fs-1 mt-5">Notes</h1>
+        <h1 class="bookLink fs-1 mt-5">Notes</h1>
         <pre class="paragraph mb-4"><%= book.notes %></pre>
         <% if(user_id == book.user_id) { %>
         <a href="/edit/<%= book.id %>" class="sortLink fs-4">Edit</a>
