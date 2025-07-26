@@ -443,6 +443,17 @@ app.get("/auth/google/squeezebook",
   }),
 );
 
+app.get("/auth/google", passport.authenticate("google", {
+  scope: ["profile", "email"]
+}));
+app.get("/auth/google/squeezebook",
+  passport.authenticate("google", {
+    failureRedirect: "/signup",  // or any fallback route
+    successRedirect: "/myBooks" // or wherever you want to redirect after login
+  })
+);
+
+
 passport.use("Google",
   new GoogleStrategy(
     {
