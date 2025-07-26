@@ -31,6 +31,7 @@ app.use(
     saveUninitialized: false,
     cookie: { secure: false },
   })
+
 );
 
 app.use(passport.initialize());
@@ -447,7 +448,7 @@ passport.use("Google",
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/squeezebook",
+      callbackURL: "https://squeezebook-production.up.railway.app//auth/google/squeezebook",
     }, async function (accessToken, refreshToken, profile, cb) {
       const email = profile.emails?.[0]?.value || "";
       const photo = profile.photos?.[0]?.value || "";
