@@ -9,6 +9,8 @@ import GoogleStrategy from "passport-google-oauth2";
 import { Strategy } from "passport-local";
 import bcrypt from "bcrypt";
 import flash from "express-flash";
+import pgSession from "connect-pg-simple";
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -26,12 +28,14 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(
   session({
+    store: new (pgSession(session))({
+      pool: pool, // reuse your pg pool
+    }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false },
+    cookie: { secure: false }, // set true if using HTTPS
   })
-
 );
 
 app.use(passport.initialize());
@@ -39,10 +43,10 @@ app.use(passport.session());
 app.use(flash());
 
 const pool = new Pool({
- connectionString: process.env.DATABASE_URL,
-  // ssl: {
-  //   rejectUnauthorized: false,
-  // },
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // needed on Render
+  },
 });
 
 pool.connect()
