@@ -79,7 +79,7 @@ connectWithRetry().then(connected => {
         },
       })
     );
-    
+
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(flash());
@@ -89,10 +89,7 @@ connectWithRetry().then(connected => {
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);
     });
-  }
-});
-
-app.use((req, res, next) => {
+    app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 })
@@ -265,7 +262,7 @@ app.get("/edit/:id", async (req, res) => {
 
 app.get("/viewBook/:id", async (req, res) => {
   const id = parseInt(req.params.id, 10);
-  const user_id = req.user? req.user.id : null;
+  const user_id = req.user ? req.user.id : null;
   console.log(user_id);
   if (isNaN(id)) {
     return res.status(400).send("Invalid book ID");
@@ -290,48 +287,48 @@ app.get("/viewBook/:id", async (req, res) => {
 });
 
 app.get("/myBooks", async (req, res) => {
-  try{
-  if (!req.isAuthenticated || !req.isAuthenticated()) {
-    return res.redirect("/signup#login");
-  }else{
-    const sortBy = req.query.sort;
-  const searchTerm = req.query.q;
-  const page = parseInt(req.query.page) || 1;
-  const limit = 8;
-  const offset = (page - 1) * limit;
+  try {
+    if (!req.isAuthenticated || !req.isAuthenticated()) {
+      return res.redirect("/signup#login");
+    } else {
+      const sortBy = req.query.sort;
+      const searchTerm = req.query.q;
+      const page = parseInt(req.query.page) || 1;
+      const limit = 8;
+      const offset = (page - 1) * limit;
 
-  let baseQuery = "SELECT * FROM bookitems WHERE user_id = $1";
-  const values = [req.user.id];
-  let bookCountQuery = "Select count(*) from bookitems where user_id = $1";
+      let baseQuery = "SELECT * FROM bookitems WHERE user_id = $1";
+      const values = [req.user.id];
+      let bookCountQuery = "Select count(*) from bookitems where user_id = $1";
 
-  if (searchTerm) {
-    baseQuery += " AND title ILIKE $2";
-    bookCountQuery += " AND title ILike $2";
-    values.push(`%${searchTerm}%`);
-  }
-  if (sortBy === "title") {
-    baseQuery += " ORDER BY title ASC";
-  } else if (sortBy === "rating") {
-    baseQuery += " ORDER BY rating DESC";
-  }
-  baseQuery += ` Limit ${limit} Offset ${offset}`;
+      if (searchTerm) {
+        baseQuery += " AND title ILIKE $2";
+        bookCountQuery += " AND title ILike $2";
+        values.push(`%${searchTerm}%`);
+      }
+      if (sortBy === "title") {
+        baseQuery += " ORDER BY title ASC";
+      } else if (sortBy === "rating") {
+        baseQuery += " ORDER BY rating DESC";
+      }
+      baseQuery += ` Limit ${limit} Offset ${offset}`;
 
-    const result = await pool.query(baseQuery, values);
-    const books = result.rows;
-    const countQueryResult = await pool.query(bookCountQuery, values);
-    const totalBooks = parseInt(countQueryResult.rows[0].count);
-    const totalPages = Math.ceil(totalBooks / limit);
-  res.render("myBooks.ejs", {
-    book: books,
-    searchTerm: searchTerm || "",
-    totalPages: totalPages,
-    currentPage: page,
-    sortBy: sortBy
-  })
-  }
+      const result = await pool.query(baseQuery, values);
+      const books = result.rows;
+      const countQueryResult = await pool.query(bookCountQuery, values);
+      const totalBooks = parseInt(countQueryResult.rows[0].count);
+      const totalPages = Math.ceil(totalBooks / limit);
+      res.render("myBooks.ejs", {
+        book: books,
+        searchTerm: searchTerm || "",
+        totalPages: totalPages,
+        currentPage: page,
+        sortBy: sortBy
+      })
+    }
 
-  
-}catch (err) {
+
+  } catch (err) {
     console.error("Error while fetching books in /myBooks ", err);
     res.status(500).send("Error Loading Books")
   }
@@ -341,7 +338,7 @@ app.get("/exploreBooks", async (req, res) => {
   const sortBy = req.query.sortBy;
   const searchTerm = req.query.q;
   const limit = 8;
-  const page = parseInt( req.query.page) || 1 ;
+  const page = parseInt(req.query.page) || 1;
   const offset = (page - 1) * limit;
 
   let baseQuery = "Select * from bookitems where status = $1 ";
@@ -366,7 +363,7 @@ app.get("/exploreBooks", async (req, res) => {
     const data = result.rows;
     const countQueryResult = await pool.query(bookCountQuery, values);
     const totalBooks = parseInt(countQueryResult.rows[0].count);
-    const totalPages = Math.ceil( totalBooks / limit);
+    const totalPages = Math.ceil(totalBooks / limit);
 
     res.render("exploreBooks.ejs", {
       book: data,
@@ -522,3 +519,6 @@ passport.deserializeUser(async (id, cb) => {
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}.`);
 });
+  }
+});
+
