@@ -38,7 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-const Pool = new Pool({
+const db = new Pool({
  connectionString: process.env.DATABASE_URL,
   // ssl: {
   //   rejectUnauthorized: false,
