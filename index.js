@@ -10,6 +10,10 @@ import { Strategy } from "passport-local";
 import bcrypt from "bcrypt";
 import flash from "express-flash";
 import pgSession from "connect-pg-simple";
+import dns from "dns";
+dns.setDefaultResultOrder("ipv4first");
+
+
 
 
 const app = express();
