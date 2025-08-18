@@ -26,17 +26,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(
-  session({
-    store: new (pgSession(session))({
-      pool: pool, // reuse your pg pool
-    }),
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false }, // set true if using HTTPS
-  })
-);
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -57,6 +47,18 @@ pool.connect()
     process.exit(1);
 
   });
+
+  app.use(
+  session({
+    store: new (pgSession(session))({
+      pool: pool, // reuse your pg pool
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }, // set true if using HTTPS
+  })
+);
 
 app.use((req, res, next) => {
   res.locals.user = req.user;
