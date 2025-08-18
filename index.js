@@ -11,10 +11,9 @@ import bcrypt from "bcrypt";
 import flash from "express-flash";
 import pgSession from "connect-pg-simple";
 import dns from "dns";
+
+// CRITICAL FIX: Force IPv4 DNS resolution
 dns.setDefaultResultOrder("ipv4first");
-
-
-
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -30,27 +29,39 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-const pool = new Pool({
+// FIXED DATABASE CONNECTION ==============================================
+const connectionConfig = {
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false, // needed on Render
+    rejectUnauthorized: false,
   },
-});
+  // Force IPv4 connections
+  connectionTimeoutMillis: 5000,
+  query_timeout: 5000,
+};
 
-pool.connect()
-  .then(() => console.log("Database Connected Successfully"))
-  .catch(err => {
-    console.error("Error connecting Database", err.message);
+const pool = new Pool(connectionConfig);
 
-    process.exit(1);
+// Enhanced connection handling with retries
+const connectWithRetry = async () => {
+  console.log("Attempting database connection...");
+  try {
+    const client = await pool.connect();
+    console.log("Database connected successfully!");
+    client.release();
+  } catch (err) {
+    console.error("Database connection failed:", err.message);
+    console.log("Retrying in 5 seconds...");
+    setTimeout(connectWithRetry, 5000);
+  }
+};
 
-  });
+connectWithRetry();
+// =========================================================================
 
 app.use(
   session({
@@ -59,7 +70,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === "production", // ✅ use HTTPS in production
+      secure: process.env.NODE_ENV === "production",
       sameSite: "lax"
     },
   })
