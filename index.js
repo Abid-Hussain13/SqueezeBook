@@ -48,17 +48,19 @@ pool.connect()
 
   });
 
-  app.use(
+app.use(
   session({
-    store: new (pgSession(session))({
-      pool: pool, // reuse your pg pool
-    }),
+    store: new (pgSession(session))({ pool }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }, // set true if using HTTPS
+    cookie: {
+      secure: process.env.NODE_ENV === "production", // ✅ use HTTPS in production
+      sameSite: "lax"
+    },
   })
 );
+
 
 app.use((req, res, next) => {
   res.locals.user = req.user;
