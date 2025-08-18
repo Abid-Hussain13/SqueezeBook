@@ -11,12 +11,10 @@ import bcrypt from "bcrypt";
 import flash from "express-flash";
 import pgSession from "connect-pg-simple";
 import dns from "dns";
-import { createRequire } from 'module';
 
-// CRITICAL FIX 1: Force IPv4 DNS resolution
-dns.setDefaultResultOrder("ipv4");
+// FIX 1: Correct DNS configuration
+dns.setDefaultResultOrder("ipv4first"); // Use valid value
 
-const require = createRequire(import.meta.url);
 const app = express();
 const port = process.env.PORT || 3000;
 dotenv.config({ path: "./.env" });
@@ -31,7 +29,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// CRITICAL FIX 2: Enhanced database connection
+// FIX 2: Use explicit connection parameters
 const connectionConfig = {
   host: process.env.DB_HOST || 'db.dundbqpfvfowohvmwcdr.supabase.co',
   port: process.env.DB_PORT || 5432,
@@ -42,14 +40,14 @@ const connectionConfig = {
     rejectUnauthorized: false,
   },
   // Force IPv4 connections
-  family: 4,
+  family: 4, // <-- CRITICAL FIX for IPv4
   connectionTimeoutMillis: 5000,
   query_timeout: 5000
 };
 
 const pool = new Pool(connectionConfig);
 
-// Enhanced connection handling with retries
+// Enhanced connection handling
 const connectWithRetry = async () => {
   console.log("Attempting database connection...");
   try {
@@ -65,10 +63,10 @@ const connectWithRetry = async () => {
   }
 };
 
-// Wait for database connection before setting up session
+// Initialize database connection first
 connectWithRetry().then(connected => {
   if (connected) {
-    // CRITICAL FIX 3: Initialize session AFTER database connection
+    // Initialize session AFTER database connection
     app.use(
       session({
         store: new (pgSession(session))({ pool }),
@@ -85,15 +83,14 @@ connectWithRetry().then(connected => {
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(flash());
-    
-    // ... rest of your routes and middleware ...
-    
+
+    // ... rest of your routes and passport configuration ...
+
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);
     });
   }
 });
-
 
 app.use((req, res, next) => {
   res.locals.user = req.user;
@@ -520,4 +517,8 @@ passport.deserializeUser(async (id, cb) => {
   const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
   console.log(result.rows[0]);
   cb(null, result.rows[0]);
+});
+
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}.`);
 });
