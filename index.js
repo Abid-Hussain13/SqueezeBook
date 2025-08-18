@@ -45,7 +45,7 @@ const pool = new Pool({
   // },
 });
 
-db.connect()
+pool.connect()
   .then(() => console.log("Database Connected Successfully"))
   .catch(err => {
     console.error("Error connecting Database", err.message);
@@ -84,9 +84,9 @@ app.get("/", async (req, res) => {
   baseQuery += ` Limit ${limit} Offset ${offset}`;
 
   try {
-    const result = await db.query(baseQuery, values);
+    const result = await pool.query(baseQuery, values);
     const books = result.rows;
-    const countQueryResult = await db.query(bookCountQuery, values);
+    const countQueryResult = await pool.query(bookCountQuery, values);
     const totalBooks = parseInt(countQueryResult.rows[0].count);
     const totalPages = Math.ceil(totalBooks / limit);
 
@@ -135,7 +135,7 @@ app.post("/add", async (req, res) => {
 
   if (id) {
     try {
-      await db.query(
+      await pool.query(
         `UPDATE bookitems 
          SET rating = $1, summary = $2, notes = $3, isbn = $5, image = $6, status = $7, user_id = $8 
          WHERE id = $4`,
@@ -159,7 +159,7 @@ app.post("/add", async (req, res) => {
         authorName = authorRes.data.name;
       }
 
-      await db.query(
+      await pool.query(
         `INSERT INTO bookitems 
         (title, author, rating, isbn, summary, notes, image, status, user_id) 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
@@ -193,8 +193,8 @@ app.get("/delete/:id", async (req, res) => {
     return res.status(400).send("Invalid book ID");
   }
   try {
-    await db.query("DELETE FROM bookitems WHERE id = $1;", [id]);
-    const data = await db.query("select * from bookitems;");
+    await pool.query("DELETE FROM bookitems WHERE id = $1;", [id]);
+    const data = await pool.query("select * from bookitems;");
     res.render("index.ejs", {
       book: data.rows,
       searchTerm: "",
@@ -212,7 +212,7 @@ app.get("/edit/:id", async (req, res) => {
     return res.status(400).send("Invalid book ID");
   }
   try {
-    const result = await db.query("SELECT * FROM bookitems WHERE id = $1;", [
+    const result = await pool.query("SELECT * FROM bookitems WHERE id = $1;", [
       id,
     ]);
     console.log(result.rows[0]);
@@ -233,7 +233,7 @@ app.get("/viewBook/:id", async (req, res) => {
     return res.status(400).send("Invalid book ID");
   }
   try {
-    const result = await db.query("SELECT * FROM bookitems WHERE id = $1;", [
+    const result = await pool.query("SELECT * FROM bookitems WHERE id = $1;", [
       id,
     ]);
     if (result.rows.length === 0) {
@@ -278,9 +278,9 @@ app.get("/myBooks", async (req, res) => {
   }
   baseQuery += ` Limit ${limit} Offset ${offset}`;
 
-    const result = await db.query(baseQuery, values);
+    const result = await pool.query(baseQuery, values);
     const books = result.rows;
-    const countQueryResult = await db.query(bookCountQuery, values);
+    const countQueryResult = await pool.query(bookCountQuery, values);
     const totalBooks = parseInt(countQueryResult.rows[0].count);
     const totalPages = Math.ceil(totalBooks / limit);
   res.render("myBooks.ejs", {
@@ -324,9 +324,9 @@ app.get("/exploreBooks", async (req, res) => {
   }
   baseQuery += ` Limit ${limit} offset ${offset}`;
   try {
-    const result = await db.query(baseQuery, values);
+    const result = await pool.query(baseQuery, values);
     const data = result.rows;
-    const countQueryResult = await db.query(bookCountQuery, values);
+    const countQueryResult = await pool.query(bookCountQuery, values);
     const totalBooks = parseInt(countQueryResult.rows[0].count);
     const totalPages = Math.ceil( totalBooks / limit);
 
@@ -355,14 +355,14 @@ app.get("/signup", (req, res) => {
 app.post("/signup", async (req, res) => {
   const { fName, lName, email, password } = req.body;
   try {
-    const result = await db.query("Select * from users where email = $1", [
+    const result = await pool.query("Select * from users where email = $1", [
       email,
     ]);
     if (result.rows.length > 0) {
       return res.redirect("/signup#login");
     } else {
       const hashedPassword = await bcrypt.hash(password, 13);
-      await db.query(
+      await pool.query(
         "INSERT INTO users (fName, lName, email, password) VALUES ($1, $2, $3, $4)",
         [fName, lName, email, hashedPassword]
       );
@@ -397,7 +397,7 @@ passport.use(
   new Strategy({ usernameField: "email", passwordField: "password" },
     async function verify(email, password, cb) {
       try {
-        const result = await db.query("Select * from users where email=$1", [
+        const result = await pool.query("Select * from users where email=$1", [
           email,
         ]);
         if (result.rows.length > 0) {
@@ -453,11 +453,11 @@ passport.use("Google",
       const lName = profile.family_name;
       try {
         // console.log(profile);
-        const result = await db.query("SELECT * FROM users WHERE email = $1", [
+        const result = await pool.query("SELECT * FROM users WHERE email = $1", [
           email
         ]);
         if (result.rows.length === 0) {
-          const newUser = await db.query(
+          const newUser = await pool.query(
             "INSERT INTO users (fName, lName, email, password, profile_pic) VALUES ($1, $2,$3, $4, $5)",
             [fName, lName, email, "oAuth", photo]
           );
@@ -476,7 +476,7 @@ passport.serializeUser((user, cb) => {
 });
 
 passport.deserializeUser(async (id, cb) => {
-  const result = await db.query("SELECT * FROM users WHERE id = $1", [id]);
+  const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
   console.log(result.rows[0]);
   cb(null, result.rows[0]);
 });
