@@ -11,10 +11,12 @@ import bcrypt from "bcrypt";
 import flash from "express-flash";
 import pgSession from "connect-pg-simple";
 import dns from "dns";
+import { createRequire } from 'module';
 
-// CRITICAL FIX: Force IPv4 DNS resolution
-dns.setDefaultResultOrder("ipv4first");
+// CRITICAL FIX 1: Force IPv4 DNS resolution
+dns.setDefaultResultOrder("ipv4");
 
+const require = createRequire(import.meta.url);
 const app = express();
 const port = process.env.PORT || 3000;
 dotenv.config({ path: "./.env" });
@@ -29,19 +31,20 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
-
-// FIXED DATABASE CONNECTION ==============================================
+// CRITICAL FIX 2: Enhanced database connection
 const connectionConfig = {
-  connectionString: process.env.DATABASE_URL,
+  host: process.env.DB_HOST || 'db.dundbqpfvfowohvmwcdr.supabase.co',
+  port: process.env.DB_PORT || 5432,
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD || 'whysoserious',
+  database: process.env.DB_NAME || 'postgres',
   ssl: {
     rejectUnauthorized: false,
   },
   // Force IPv4 connections
+  family: 4,
   connectionTimeoutMillis: 5000,
-  query_timeout: 5000,
+  query_timeout: 5000
 };
 
 const pool = new Pool(connectionConfig);
@@ -53,28 +56,43 @@ const connectWithRetry = async () => {
     const client = await pool.connect();
     console.log("Database connected successfully!");
     client.release();
+    return true;
   } catch (err) {
     console.error("Database connection failed:", err.message);
     console.log("Retrying in 5 seconds...");
     setTimeout(connectWithRetry, 5000);
+    return false;
   }
 };
 
-connectWithRetry();
-// =========================================================================
-
-app.use(
-  session({
-    store: new (pgSession(session))({ pool }),
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax"
-    },
-  })
-);
+// Wait for database connection before setting up session
+connectWithRetry().then(connected => {
+  if (connected) {
+    // CRITICAL FIX 3: Initialize session AFTER database connection
+    app.use(
+      session({
+        store: new (pgSession(session))({ pool }),
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax"
+        },
+      })
+    );
+    
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.use(flash());
+    
+    // ... rest of your routes and middleware ...
+    
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
+  }
+});
 
 
 app.use((req, res, next) => {
@@ -502,8 +520,4 @@ passport.deserializeUser(async (id, cb) => {
   const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
   console.log(result.rows[0]);
   cb(null, result.rows[0]);
-});
-
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}.`);
 });
