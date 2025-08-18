@@ -12,8 +12,8 @@ import flash from "express-flash";
 import pgSession from "connect-pg-simple";
 import dns from "dns";
 
-// FIX 1: Correct DNS configuration
-dns.setDefaultResultOrder("ipv4first"); // Use valid value
+// Correct DNS configuration
+dns.setDefaultResultOrder("ipv4first");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -29,18 +29,15 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// FIX 2: Use explicit connection parameters
+// Database configuration - USE CONNECTION STRING FORMAT
 const connectionConfig = {
-  host: process.env.DB_HOST || 'db.dundbqpfvfowohvmwcdr.supabase.co',
-  port: process.env.DB_PORT || 5432,
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'whysoserious',
-  database: process.env.DB_NAME || 'postgres',
+  connectionString: process.env.DATABASE_URL || 
+    'postgresql://postgres:whysoserious@db.dundbqpfvfowohvmwcdr.supabase.co:5432/postgres?sslmode=require&options=--address_family=ipv4',
   ssl: {
     rejectUnauthorized: false,
   },
   // Force IPv4 connections
-  family: 4, // <-- CRITICAL FIX for IPv4
+  family: 4,
   connectionTimeoutMillis: 5000,
   query_timeout: 5000
 };
@@ -79,17 +76,19 @@ connectWithRetry().then(connected => {
         },
       })
     );
-
+    
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(flash());
 
-    // ... rest of your routes and passport configuration ...
-
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
+    // ========== ALL ROUTES MUST BE REGISTERED HERE ==========
     app.use((req, res, next) => {
+      res.locals.user = req.user;
+      next();
+    });
+
+    // ... ALL YOUR ROUTES GO HERE ...
+   app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 })
@@ -516,9 +515,13 @@ passport.deserializeUser(async (id, cb) => {
   cb(null, result.rows[0]);
 });
 
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}.`);
-});
+
+    // ========== START SERVER ONLY AFTER ROUTES ARE REGISTERED ==========
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
   }
 });
+
+// ====== REMOVED DUPLICATE app.listen() AND ROUTES FROM HERE ======
 
