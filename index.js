@@ -1,5 +1,5 @@
 import express from "express";
-import pg from "pg";
+import { Pool } from "pg";
 import bodyParser from "body-parser";
 import axios from "axios";
 import dotenv from "dotenv";
@@ -38,13 +38,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-let db;
-db = new pg.Client({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: parseInt(process.env.DB_PORT),
+const Pool = new Pool({
+ connectionString: process.env.DATABASE_URL,
   // ssl: {
   //   rejectUnauthorized: false,
   // },
