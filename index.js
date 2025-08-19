@@ -30,7 +30,7 @@ app.set("views", path.join(__dirname, "views"));
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false, // tells pg to accept Aiven's SSL cert
+    ca: fs.readFileSync("./ca.pem").toString(),
   },
 });
 
