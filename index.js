@@ -29,9 +29,7 @@ app.set("views", path.join(__dirname, "views"));
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    ca: fs.readFileSync("./ca.pem").toString(),
-  },
+  ssl: false,
 });
 
 pool.query("SELECT NOW()", (err, res) => {
