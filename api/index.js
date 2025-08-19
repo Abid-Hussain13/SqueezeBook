@@ -519,5 +519,6 @@ passport.deserializeUser(async (id, cb) => {
   }
 });
 
-
-export const handler = serverless(app);
+export default function handler(req, res) {
+  app(req, res);
+}
