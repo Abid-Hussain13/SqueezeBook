@@ -292,10 +292,10 @@ footer {
 
 @media screen and (max-width: 575px){
     .heading{
-        font-size: 23px;
+        font-size: 22px;
     }
     .secHeading{
-        font-size: 35px;
+        font-size: 32px;
     }
      .nav {
         width: 100% !important;
