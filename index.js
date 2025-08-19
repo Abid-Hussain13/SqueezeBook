@@ -263,7 +263,7 @@ app.use((req, res, next) => {
 
   app.get("/myBooks", async (req, res) => {
     try {
-      if (!req.isAuthenticated || !req.isAuthenticated()) {
+      if (!req.isAuthenticated()) {
         return res.redirect("/signup");
       } else {
         const sortBy = req.query.sort;
@@ -496,6 +496,5 @@ app.use((req, res, next) => {
     // console.log(`Server running on port ${port}`);
   // });
 
-export default function handler(req, res) {
-  app(req, res);
-}
+const handler = serverless(app);
+export default handler;
