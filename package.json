@@ -29,6 +29,7 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-local": "^1.0.0",
     "pg": "^8.16.2",
-    "postgresql-client": "^2.13.0"
+    "postgresql-client": "^2.13.0",
+    "serverless-http": "^3.2.0"
   }
 }
