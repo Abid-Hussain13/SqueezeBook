@@ -26,13 +26,20 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+import { Pool } from "pg";
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: true,
-    ca: process.env.PG_CA_CERT,
+    rejectUnauthorized: false, // tells pg to accept Aiven's SSL cert
   },
 });
+
+pool.query("SELECT NOW()", (err, res) => {
+  console.log(err || res.rows);
+  process.exit();
+});
+
 
 
 // Enhanced connection handling
