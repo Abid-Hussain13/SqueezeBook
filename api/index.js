@@ -11,6 +11,7 @@ import bcrypt from "bcrypt";
 import flash from "express-flash";
 import pgSession from "connect-pg-simple";
 import fs from "fs";
+import serverless from "serverless-http";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -512,8 +513,11 @@ passport.deserializeUser(async (id, cb) => {
 
 
     // ========== START SERVER ONLY AFTER ROUTES ARE REGISTERED ==========
-   app.listen(port, "0.0.0.0", () => {
-  console.log(`Server running on http://0.0.0.0:${port}`);
-});
+//    app.listen(port, "0.0.0.0", () => {
+//   console.log(`Server running on http://0.0.0.0:${port}`);
+// });
   }
 });
+
+
+export const handler = serverless(app);
