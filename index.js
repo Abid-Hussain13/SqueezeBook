@@ -10,10 +10,6 @@ import { Strategy } from "passport-local";
 import bcrypt from "bcrypt";
 import flash from "express-flash";
 import pgSession from "connect-pg-simple";
-import dns from "dns";
-
-// Correct DNS configuration
-dns.setDefaultResultOrder("ipv4first");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -29,20 +25,13 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Database configuration - USE CONNECTION STRING FORMAT
-const connectionConfig = {
-  connectionString: process.env.DATABASE_URL || 
-    'postgresql://postgres:whysoserious@db.dundbqpfvfowohvmwcdr.supabase.co:5432/postgres?sslmode=require&options=--address_family=ipv4',
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: false, // Aiven requires SSL
   },
-  // Force IPv4 connections
-  family: 4,
-  connectionTimeoutMillis: 5000,
-  query_timeout: 5000
-};
+});
 
-const pool = new Pool(connectionConfig);
 
 // Enhanced connection handling
 const connectWithRetry = async () => {
@@ -522,6 +511,3 @@ passport.deserializeUser(async (id, cb) => {
     });
   }
 });
-
-// ====== REMOVED DUPLICATE app.listen() AND ROUTES FROM HERE ======
-
