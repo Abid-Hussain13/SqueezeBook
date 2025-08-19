@@ -29,7 +29,7 @@ app.set("views", path.join(__dirname, "views"));
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: false,
+  ssl: { rejectUnauthorized: false }
 });
 
 pool.query("SELECT NOW()", (err, res) => {
