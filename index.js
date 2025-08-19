@@ -10,6 +10,7 @@ import { Strategy } from "passport-local";
 import bcrypt from "bcrypt";
 import flash from "express-flash";
 import pgSession from "connect-pg-simple";
+import fs from "fs";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -28,7 +29,8 @@ app.set("views", path.join(__dirname, "views"));
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false, // Aiven requires SSL
+    rejectUnauthorized: true,
+    ca: process.env.PG_CA_CERT,
   },
 });
 
