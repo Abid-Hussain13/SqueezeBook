@@ -512,8 +512,8 @@ passport.deserializeUser(async (id, cb) => {
 
 
     // ========== START SERVER ONLY AFTER ROUTES ARE REGISTERED ==========
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
+   app.listen(port, "0.0.0.0", () => {
+  console.log(`Server running on http://0.0.0.0:${port}`);
+});
   }
 });
