@@ -491,10 +491,10 @@ app.use((req, res, next) => {
   });
 
 
-     app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-  });
+    //  app.listen(port, () => {
+    // console.log(`Server running on port ${port}`);
+  // });
 
-// export default function handler(req, res) {
-//   app(req, res);
-// }
+export default function handler(req, res) {
+  app(req, res);
+}
