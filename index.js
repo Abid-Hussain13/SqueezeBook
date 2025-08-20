@@ -39,6 +39,7 @@ const pool = new Pool({
 pool.query("SELECT NOW()", (err, res) => {
   console.log(err || res.rows);
 });
+app.set("trust proxy", 1);
 
 app.use(
   session({
@@ -50,9 +51,11 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-    },
+  secure: process.env.NODE_ENV === "production" ? "auto" : false, 
+  sameSite: "lax",
+  maxAge: 1000 * 60 * 60 * 24, // 1 day
+},
+
   })
 );
 
@@ -395,15 +398,10 @@ app.use((req, res, next) => {
   })
 
 
-app.post("/", (req, res) => {
-  res.redirect("/");
-});
-
-
   app.post(
     "/login",
     passport.authenticate("local", {
-      successRedirect: "/myBooks",
+      successRedirect: "/",
       failureRedirect: "/signup#login",
     })
   );

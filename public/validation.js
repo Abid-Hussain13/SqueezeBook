@@ -80,9 +80,6 @@ $(document).ready(function(){
     else if(loginpassword === ""){
       $("#loginpassword").next(".error").text("Please Enter Password");
       isValids = false;
-    }else if(loginpassword.length < 8){
-      $("#loginpassword").next(".error").text("Password must be at least 8 charaters");
-      isValids = false;
     }
     if(isValids){
       this.submit();
