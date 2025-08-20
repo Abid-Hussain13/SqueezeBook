@@ -62,30 +62,33 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-  $(".login-form").on("submit",function(e){
-    e.preventDefault();
+  $(".login-form").on("submit", function(e) {
+    e.preventDefault(); // Prevent default for validation
+    $(".error").text(""); // Clear previous errors
 
-    $(".error").text("");
-    let isValids = true;
+    let isValid = true;
     let loginemail = $("#loginemail").val().trim();
     let loginpassword = $("#loginpassword").val().trim();
-    let EmailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-    if(loginemail === ""){
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if (loginemail === "") {
       $("#loginemail").next(".error").text("Please Enter Email");
-      isValids = false;
-    }else if(!EmailPattern.test(loginemail)){
+      isValid = false;
+    } else if (!emailPattern.test(loginemail)) {
       $("#loginemail").next(".error").text("Please Enter Valid Email");
-      isValids = false;
+      isValid = false;
     }
-    else if(loginpassword === ""){
+    if (loginpassword === "") {
       $("#loginpassword").next(".error").text("Please Enter Password");
-      isValids = false;
+      isValid = false;
     }
-    if(isValids){
+
+    if (isValid) {
+      // Submit the form normally to let the browser handle the redirect
       this.submit();
     }
-  })
-})
+  });
+});
 
 
 // Book Submittion Validation 

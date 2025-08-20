@@ -71,6 +71,11 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
+app.use((req, res, next) => {
+  console.log(req.method, req.url);
+  next();
+});
+
 
   app.get("/", async (req, res) => {
     const sortBy = req.query.sort;
@@ -397,11 +402,10 @@ app.use((req, res, next) => {
     })
   })
 
-
   app.post(
     "/login",
     passport.authenticate("local", {
-      successRedirect: "/",
+      successRedirect: "/myBooks",
       failureRedirect: "/signup#login",
     })
   );
