@@ -394,10 +394,16 @@ app.use((req, res, next) => {
     })
   })
 
+
+app.post("/", (req, res) => {
+  res.redirect("/");
+});
+
+
   app.post(
     "/login",
     passport.authenticate("local", {
-      successRedirect: "/",
+      successRedirect: "/myBooks",
       failureRedirect: "/signup#login",
     })
   );
@@ -496,6 +502,6 @@ app.use((req, res, next) => {
     // console.log(`Server running on port ${port}`);
   // });
 
-const handler = serverless(app);
-
-export default handler;
+export default function handler(req, res) {
+  app(req, res);
+}
