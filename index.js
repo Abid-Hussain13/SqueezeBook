@@ -463,7 +463,7 @@ app.use((req, res, next) => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/google/squeezebook",
+        callbackURL: "https://squeezebook.vercel.app/auth/google/squeezebook",
       }, async function (accessToken, refreshToken, profile, cb) {
         const email = profile.emails?.[0]?.value || "";
         const photo = profile.photos?.[0]?.value || "";
