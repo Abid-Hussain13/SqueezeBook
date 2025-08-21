@@ -405,11 +405,14 @@ app.use((req, res, next) => {
   app.post(
     "/login",
     passport.authenticate("local", {
-      successRedirect: "/myBooks",
       failureRedirect: "/signup#login",
-    })
+    }),
+    (req, res) => {
+      res.redirect(303, "/myBooks"); // forces a GET redirect
+    }
   );
-  
+
+
 
   passport.use(
     "local",
@@ -450,15 +453,12 @@ app.use((req, res, next) => {
     }
   ));
 
- app.get("/auth/google/squeezebook",
-  passport.authenticate("google", {
-    failureRedirect: "/signup"
-  }),
-  (req, res) => {
-    res.redirect(303, "/myBooks"); // forces a GET redirect
-  }
-);
-
+  app.get("/auth/google/squeezebook",
+    passport.authenticate("Google", {
+      successRedirect: "/myBooks",
+      failureRedirect: "/signup"
+    }),
+  );
 
 
 
