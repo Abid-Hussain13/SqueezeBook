@@ -405,7 +405,7 @@ app.use((req, res, next) => {
   app.post(
     "/login",
     passport.authenticate("local", {
-      successRedirect: (303,"/myBooks"),
+      successRedirect: "/myBooks",
       failureRedirect: "/signup#login",
     })
   );
