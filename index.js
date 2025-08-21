@@ -138,7 +138,7 @@ app.use((req, res, next) => {
     } else {
       req.session.error = "Login to add book";
 
-      res.redirect("/signup");
+      res.redirect(303,"/signup");
 
     }
   });
@@ -148,7 +148,7 @@ app.use((req, res, next) => {
     const imageUrl = `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`;
 
     if (!req.user) {
-      return res.redirect("/signup");
+      return res.redirect(303,"/signup");
     }
 
     if (id) {
@@ -159,7 +159,7 @@ app.use((req, res, next) => {
          WHERE id = $4`,
           [rating, summary, notes, id, isbn, imageUrl, status, req.user.id]
         );
-        res.redirect("/myBooks");
+        res.redirect(303,"/myBooks");
       } catch (err) {
         console.error("Error updating book:", err.message);
         res.render("add.ejs", {
@@ -194,7 +194,7 @@ app.use((req, res, next) => {
           ]
         );
 
-        res.redirect("/myBooks");
+        res.redirect(303,"/myBooks");
       } catch (err) {
         console.error("Failed to fetch book data:", err.message);
         res.render("add.ejs", {
@@ -272,7 +272,7 @@ app.use((req, res, next) => {
   app.get("/myBooks", async (req, res) => {
     try {
       if (!req.isAuthenticated()) {
-        return res.redirect("/signup");
+        return res.redirect(303,"/signup");
       } else {
         const sortBy = req.query.sort;
         const searchTerm = req.query.q;
@@ -377,14 +377,14 @@ app.use((req, res, next) => {
         email,
       ]);
       if (result.rows.length > 0) {
-        return res.redirect("/signup");
+        return res.redirect(303,"/signup");
       } else {
         const hashedPassword = await bcrypt.hash(password, 13);
         await pool.query(
           "INSERT INTO users (fName, lName, email, password) VALUES ($1, $2, $3, $4)",
           [fName, lName, email, hashedPassword]
         );
-        return res.redirect("/myBooks");
+        return res.redirect(303,"/myBooks");
       }
 
     } catch (err) {
@@ -405,10 +405,21 @@ app.use((req, res, next) => {
   app.post(
     "/login",
     passport.authenticate("local", {
-      successRedirect: "/myBooks",
       failureRedirect: "/signup#login",
-    })
+    }),
+    (req, res) =>{
+      res.redirect(303,"/myBooks");
+    }
   );
+  app.get("/auth/google/squeezebook",
+  passport.authenticate("google", {
+    failureRedirect: "/signup"
+  }),
+  (req, res) => {
+    res.redirect(303, "/myBooks"); // forces a GET redirect
+  }
+);
+
 
   passport.use(
     "local",
@@ -449,12 +460,15 @@ app.use((req, res, next) => {
     }
   ));
 
-  app.get("/auth/google/squeezebook",
-    passport.authenticate("Google", {
-      successRedirect: "/myBooks",
-      failureRedirect: "/signup"
-    }),
-  );
+ app.get("/auth/google/squeezebook",
+  passport.authenticate("google", {
+    failureRedirect: "/signup"
+  }),
+  (req, res) => {
+    res.redirect(303, "/myBooks"); // forces a GET redirect
+  }
+);
+
 
 
 
