@@ -3,7 +3,7 @@
 SqueezeBook is a personal book notes app where you can track what you’ve read, add ratings, and keep summaries & notes for future reference.  
 Built with **Node.js, Express, MySQL, and EJS**, it’s a lightweight and simple way to organize your reading journey — and share it with others. 
 
-Live here 👉 [SqueezeBook](https://your-deployment-link.com)
+Live here 👉 [SqueezeBook](https://squeezebook.vercel.app/)
 
 ---
 
